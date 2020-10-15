@@ -9,7 +9,7 @@
       "id": 2
     },
     {
-      "content": "uusi",
+      "content": "1",
       "id": 3
     }
   ],
@@ -18,11 +18,6 @@
       "name": "mluukkai",
       "number": "040-5483923",
       "id": 1
-    },
-    {
-      "name": "toimii",
-      "number": "777",
-      "id": 2
     }
   ]
 }

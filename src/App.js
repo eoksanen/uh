@@ -41,8 +41,6 @@ const useResource = (baseUrl) => {
     setResources(resourcesCopy)
     console.log('lisäötty ', resources)
 
-    return resources
-
   }
 
   const service = {
@@ -61,22 +59,22 @@ const App = () => {
   const name = useField('text')
   const number = useField('text')
 
-  let [notes, noteService] = useResource('http://localhost:3005/notes')
-  let [persons, personService] = useResource('http://localhost:3005/persons')
+  const [notes, noteService] = useResource('http://localhost:3005/notes')
+  const [persons, personService] = useResource('http://localhost:3005/persons')
 
   console.log('notes ',notes)
   
   console.log('persons ',persons)
 
-  const handleNoteSubmit = async (event) => {
+  const handleNoteSubmit = (event) => {
     event.preventDefault()
-    notes = await noteService.create({ content: content.value })
+    noteService.create({ content: content.value })
     window.location.reload(false)
   }
  
-  const handlePersonSubmit = async (event) => {
+  const handlePersonSubmit = (event) => {
     event.preventDefault()
-    persons = await personService.create({ name: name.value, number: number.value})
+    personService.create({ name: name.value, number: number.value})
     window.location.reload(false)
   }
 
