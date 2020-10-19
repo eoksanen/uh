@@ -1,7 +1,5 @@
-  
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -20,7 +18,6 @@ const useField = (type) => {
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
-
   useEffect(() => {
 
     axios.get(baseUrl)
@@ -31,16 +28,9 @@ const useResource = (baseUrl) => {
   },
   [baseUrl])
 
-
-
   const create = async (resource) => {
-
     const response = await axios.post(baseUrl, resource)
-    const resourcesCopy = resources
-    resourcesCopy.push(response.data)
-    setResources(resourcesCopy)
-    console.log('lisäötty ', resources)
-
+    setResources(resources.concat(response.data))
   }
 
   const service = {
@@ -52,15 +42,13 @@ const useResource = (baseUrl) => {
   ]
 }
 
-
-
 const App = () => {
   const content = useField('text')
   const name = useField('text')
   const number = useField('text')
 
-  const [notes, noteService] = useResource('http://localhost:3005/notes')
-  const [persons, personService] = useResource('http://localhost:3005/persons')
+  let [notes, noteService] = useResource('http://localhost:3005/notes')
+  let [persons, personService] = useResource('http://localhost:3005/persons')
 
   console.log('notes ',notes)
   
@@ -69,13 +57,11 @@ const App = () => {
   const handleNoteSubmit = (event) => {
     event.preventDefault()
     noteService.create({ content: content.value })
-    window.location.reload(false)
   }
  
   const handlePersonSubmit = (event) => {
     event.preventDefault()
     personService.create({ name: name.value, number: number.value})
-    window.location.reload(false)
   }
 
   return (
@@ -85,7 +71,7 @@ const App = () => {
         <input {...content} />
         <button>create</button>
       </form>
-      {notes.map(n => <p key={n.id}>{n.content}</p>)}
+      {notes.map(n => <p key={n.id}>{n.content}</p>)}    
 
       <h2>persons</h2>
       <form onSubmit={handlePersonSubmit}>
